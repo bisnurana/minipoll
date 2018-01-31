@@ -1,13 +1,17 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { BrowserRouter } from 'react-router-dom';
+import Reboot from 'material-ui/Reboot';
 import Header from './Header';
 import Main from './Main';
 
 const App = () => (
-    < MuiThemeProvider >
-      <Header />
+  <div >
+    <Reboot />
+    <Header />
+    <BrowserRouter>
       <Main />
-    </MuiThemeProvider >);
+    </BrowserRouter>
+  </div >);
 
 
 export default App;
