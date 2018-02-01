@@ -1,16 +1,17 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Reboot from 'material-ui/Reboot';
-import Header from './Header';
+import NavBar from './NavBar';
 import Main from './Main';
 
 const App = () => (
   <div >
-    <Reboot />
-    <Header />
-    <BrowserRouter>
-      <Main />
-    </BrowserRouter>
+    <NavBar />
+    <div className="container">
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>
+    </div>
+
   </div >);
 
 export default App;

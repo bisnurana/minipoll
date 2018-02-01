@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Dashboard from './Dashboard';
+import AllMails from './AllMails';
 import Landing from './Landing';
-import PollNew from './PollNew';
+import MailNew from './MailNew';
 
 
 const Main = () => (
   <div>
     <Switch>
       <Route exact path="/" component={Landing} />
-      <Route exact path="/polls" component={Dashboard} />
-      <Route path="/polls/new" component={PollNew} />
+      <Route exact path="/mails" component={AllMails} />
+      <Route path="/mails/new" component={MailNew} />
     </Switch>
   </div>
 
