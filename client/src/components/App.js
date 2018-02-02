@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import Main from './Main';
+import * as actions from '../actions';
 
-const App = () => (
-  <div >
-    <NavBar />
-    <div className="container">
-      <BrowserRouter>
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+  render() {
+    return (<BrowserRouter>
+      <div>
+        <NavBar />
         <Main />
-      </BrowserRouter>
-    </div>
+      </div>
+            </BrowserRouter>);
+  }
+}
 
-  </div >);
-
-export default App;
+export default connect(null, actions)(App);
