@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import StripePayment from './StripePayment';
 
 class NavBar extends Component {
   handleLogout() {
@@ -12,17 +13,16 @@ class NavBar extends Component {
     return (
       <div>
         <ul id="dropdown1" className="dropdown-content">
-          {auth ? [<li><Link to="/">Buy credit</Link></li>,
-            <li><a onClick={() => this.handleLogout()}>Log out</a></li>] : ''}
-
+          {auth && [<StripePayment />, <li key={3} className="divider" />,
+            <li key={2}><a onClick={() => this.handleLogout()}>Log out</a></li>]}
         </ul>
         <nav>
           <div className="nav-wrapper container">
-            <a href="#!" className="brand-logo">TailMail</a>
+            <Link to={auth ? '/mails' : '/'} className="brand-logo">TailMail</Link>
             <ul className="right">
-              {auth ? [<li><Link to="/mails" className="nav-text">All mails</Link></li>,
-                <li><Link to="/mails/reports" className="nav-text">Reports</Link></li>,
-                <li><Link to="/mail/create" className="nav-text">Create mail</Link></li>, <li><a className="dropdown-button" href="#!" data-activates="dropdown1">Credits(2)<i className="material-icons right"> account_circle</i></a></li>] : <li><a href="/auth/google">Log in</a></li>}
+              {auth ? [<li key={4}><Link to="/mails" className="nav-text">All mails</Link></li>,
+                <li key={5}><Link to="/mails/reports" className="nav-text">Reports</Link></li>,
+                <li key={6}><Link to="/mail/create" className="nav-text">Create mail</Link></li>, <li key={7}><a className="dropdown-button" href="" data-activates="dropdown1">Credits(2)<i className="material-icons right"> account_circle</i></a></li>] : <li key={8}><a href="/auth/google">Log in</a></li>}
             </ul>
           </div>
         </nav>
