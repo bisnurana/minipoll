@@ -14,15 +14,15 @@ class NavBar extends Component {
       <div>
         <ul id="dropdown1" className="dropdown-content">
           {auth && [<StripePayment key={1} />, <li key={3} className="divider" />,
-            <li key={2}><a onClick={() => this.handleLogout()}>Log out</a></li>]}
+          <li key={2}><a onClick={() => this.handleLogout()}>Log out</a></li>]}
         </ul>
         <nav>
           <div className="nav-wrapper container">
-            <Link to={auth ? '/mails' : '/'} className="brand-logo">TailMail</Link>
+            <Link to={auth ? '/mails' : '/'} className="brand-logo blue-text">TailMail</Link>
             <ul className="right">
               {auth ? [<li key={4}><Link to="/mails" className="nav-text">All mails</Link></li>,
-                <li key={5}><Link to="/mails/reports" className="nav-text">Reports</Link></li>,
-                <li key={6}><Link to="/mail/create" className="nav-text">Create mail</Link></li>, <li key={7}><a className="dropdown-button" href="" data-activates="dropdown1">Credits:{this.props.auth.credits}<i className="material-icons right"> account_circle</i></a></li>] : <li key={8}><a href="/auth/google">Log in</a></li>}
+              <li key={5}><Link to="/mails/reports" className="nav-text">Reports</Link></li>,
+              <li key={6}><Link to="/mail/create" className="nav-text">Create mail</Link></li>, <li className="text-credits orange-text" key={9}><i className="material-icons left mr-credits">local_atm</i><span>{this.props.auth.credits}</span></li>, <li key={7}><a className="dropdown-button" data-activates="dropdown1"><i className="material-icons blue-text"> apps</i></a></li>] : <li key={8}><a href="/auth/google">Log in</a></li>}
             </ul>
           </div>
         </nav>

@@ -5,6 +5,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const { COOKIE_KEYS } = require('./config/keys');
 require('./models/user');
+require('./models/email');
 require('./services/passport');
 const { MONGODB_URL } = require('./config/keys');
 
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 // routes
 require('./routes/authRoutes')(app);
 require('./routes/paymentRoutes')(app);
+require('./routes/responseRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
