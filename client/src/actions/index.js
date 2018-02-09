@@ -15,4 +15,10 @@ export const handleToken = token => async (dispatch) => {
   const res = await axios.post('/api/stripe', token);
   dispatch({ type: FETCH_USER, payload: res.data });
 };
+export const sendEmail = (values, callback) => async (dispatch) => {
+  const res = await axios.post('/api/response', values);
+  dispatch({ type: FETCH_USER, payload: res.data });
+  callback();
+};
+
 

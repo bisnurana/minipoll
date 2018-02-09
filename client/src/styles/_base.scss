@@ -3,6 +3,8 @@ body {
     padding: 0;
     font-family: 'Roboto', sans-serif;
   }
+div{margin: 0;
+  padding: 0;}
 /* navbar*/
 .nav-text{
   font-size: 1.2rem;
@@ -11,3 +13,9 @@ body {
   margin-left:2rem;
 }
 .mr-credits{margin-right: 0.1rem !important;}
+/* form */
+.form-label{font-size: 1.1rem;}
+/* padding */
+.py-2{margin:2rem auto;}
+.my-1{margin:1rem auto;}
+.my-2{margin:2rem auto;}

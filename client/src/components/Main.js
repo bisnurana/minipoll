@@ -11,8 +11,7 @@ const Main = () => (
     <Route exact path="/" component={Landing} />
     <Route exact path="/mails" component={AllMails} />
     <Route path="/mails/reports" component={MailReports} />
-    <Route path="/mail/create" component={MailNew} />
-
+    <Route path="/mails/create" component={MailNew} />
   </div>
 );
 
