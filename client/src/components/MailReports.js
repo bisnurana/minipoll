@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-
-class MailReports extends Component {
-    state = {}
-    render() {
-      return (<div>Mail Reports component</div>
-      );
-    }
+import React from 'react';
+import EmailReports from './form/emailReports';
+const MailReports = () => {
+  return (<EmailReports />);
 }
 export default MailReports;

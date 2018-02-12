@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-
-class AllMails extends Component {
-  render() {
-    return (
-      <div>All Mails Component</div>
-    );
-  }
+import React from 'react';
+import EmailsList from './form/emailsList';
+const AllMails = () => {
+  return (
+    <EmailsList />
+  );
 }
 
 export default AllMails;

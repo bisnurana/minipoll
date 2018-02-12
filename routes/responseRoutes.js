@@ -93,5 +93,14 @@ module.exports = (app) => {
         }
         res.status(200).send({});
     })
-
+    app.get('/api/emails/reports', checkLogin, async (req, res) => {
+        const reports = await Email.find({ _user: req.user.id });
+        res.status(200).send(reports);
+        console.log('/api/emails/reports route called');
+    })
+    app.get('/api/emails', checkLogin, async (req, res) => {
+        const emails = await Email.find({ _user: req.user.id }).select({ recipients: false });
+        res.status(200).send(emails);
+        console.log('/api/emails route called');
+    })
 }
