@@ -6934,6 +6934,9 @@ div {
 .form-label {
   font-size: 1.1rem; }
 
+.text-prewrap {
+  white-space: pre-wrap; }
+
 /* padding */
 .py-2 {
   margin: 2rem auto; }

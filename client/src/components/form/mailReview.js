@@ -11,7 +11,9 @@ const MailReview = ({ onFormBack, formValues, sendEmail, history }) => {
         <span>{formValues[field.name]}</span><br /></div>));
     return (<div className="py-2">
         <h2 className="green-text center">Create . review & send</h2><br /> <br />
-        {reviewFields}
+        <div className="text-prewrap">
+            {reviewFields}
+        </div>
         <div className="my-2">
             <button className="btn" onClick={onFormBack} >Previous</button>
             <button className="btn green right" onClick={() => sendEmail(formValues, () => history.push('/mails'))}>Send</button>

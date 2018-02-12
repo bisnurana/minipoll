@@ -19,18 +19,21 @@ function formatLink(inputText) {
     replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
     replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
 
+    //handle spacing and line breaks
+    replacedText = replacedText.replace('\n', '<br/>')
     return replacedText;
 }
 module.exports = (app) => {
     app.post('/api/response', checkLogin, checkCredit, async (req, res) => {
         const { title, subject, body, recipients } = req.body;
+        const formattedRecipients = recipients.split(',').map(recipient => recipient.trim().toLowerCase());
+        const formattedBody = formatLink(body);
         const newEmail = new Email({
-            title, subject, body, recipients: recipients.split(',').map(email => ({ email: email.trim() })),
+            title, subject, body, recipients: recipients.split(',').map(email => ({ email: email.trim().toLowerCase() })),
+            recipientsCount: formattedRecipients.length,
             dateSent: Date.now(),
             _user: req.user.id
         });
-        const formattedRecipients = recipients.split(',').map(recipient => recipient.trim());
-        const formattedBody = formatLink(body);
         const msg = {
             to: formattedRecipients,
             from: 'noreply@tailmail.com',
@@ -53,8 +56,42 @@ module.exports = (app) => {
 
     })
     app.post('/api/response/sgwebhooks', (req, res) => {
-        console.log(req.body);
-        res.send({});
+        console.log(req.body[0]);
+        const { event, email, emailID, url = null } = req.body[0];
+        console.log("url", url);
+        console.log('event', event);
+        console.log('email', email);
+        console.log('emailID', emailID);
+        if (event === 'open') {
+            Email.updateOne({
+                _id: emailID,
+                recipients: {
+                    $elemMatch: { email: email, open: false }
+                }
+            }
+                , {
+                    $inc: { open: 1 },
+                    $set: { 'recipients.$.open': true, 'recipients.$.lastActive': Date.now() }
+
+                }
+            ).exec().then(result => console.log(result));
+        } else {
+            Email.updateOne({
+                _id: emailID,
+                recipients: {
+                    $elemMatch: { email: email, click: false }
+                }
+            }
+                , {
+                    $inc: { click: 1 },
+                    $set: { 'recipients.$.click': true, 'recipients.$.lastActive': Date.now() },
+                    $addToSet: { 'recipients.$.urls': url }
+
+                }
+            ).exec().then(result => console.log(result));
+
+        }
+        res.status(200).send({});
     })
 
 }
