@@ -21,9 +21,10 @@ export const sendEmail = (values, callback) => async (dispatch) => {
   callback();
 };
 
-export const getEmails = () => async (dispatch) => {
+export const getEmails = (callback) => async (dispatch) => {
   const res = await axios.get('/api/emails');
-  dispatch({ type: GET_EMAILS, payload: res.data })
+  dispatch({ type: GET_EMAILS, payload: res.data });
+  callback();
 };
 export const getReports = () => async (dispatch) => {
   const res = await axios.get('/api/emails/reports');

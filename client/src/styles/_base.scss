@@ -20,3 +20,17 @@ div{margin: 0;
 .py-2{margin:2rem auto;}
 .my-1{margin:1rem auto;}
 .my-2{margin:2rem auto;}
+/* 404 */
+.wrapper-404{height: 80vh;margin-top: 30vh;}
+.emailbox{
+  min-height:5rem;
+  padding:0.5rem;
+  border-radius:3px;
+}
+.email-status{
+  padding:0.5rem;
+  margin-right:0.5rem;
+  border-radius:3px;
+}
+.email-status:last-of-type{margin-right: 0;}
+
