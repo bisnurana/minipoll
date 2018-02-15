@@ -18,7 +18,6 @@ class MailForm extends Component {
         </div>)
     }
     render() {
-        console.log(this.props.auth);
         const { reset, pristine, submitting, handleSubmit } = this.props;
         return (<div className="py-2">
             <h2 className="grey-text center"><span className="green-text">Create</span> . review & send</h2><br />
@@ -36,10 +35,9 @@ class MailForm extends Component {
 }
 const validate = (values, props) => {
     const errors = {};
+    let credits = props.auth.credits || 0;
     let recipientsCount = values.recipients ? values.recipients.split(',').length : 0;
-    console.log(recipientsCount)
-    errors.recipients = validateRecipients(values.recipients || '', recipientsCount, 3);
-    console.log(props.auth);
+    errors.recipients = validateRecipients(values.recipients || '', recipientsCount, credits);
     if (!values.title) {
         errors.title = "Please provide an email title";
     }
@@ -58,5 +56,6 @@ const validate = (values, props) => {
 function mapStateToProps({ auth }) {
     return { auth }
 }
+MailForm = reduxForm({ form: 'mailForm', validate, destroyOnUnmount: false })(MailForm);
 MailForm = connect(mapStateToProps)(MailForm);
-export default reduxForm({ form: 'mailForm', validate, destroyOnUnmount: false })(MailForm);
+export default MailForm;

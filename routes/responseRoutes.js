@@ -93,14 +93,28 @@ module.exports = (app) => {
         }
         res.status(200).send({});
     })
-    app.get('/api/emails/reports', checkLogin, async (req, res) => {
-        const reports = await Email.find({ _user: req.user.id });
-        res.status(200).send(reports);
-        console.log('/api/emails/reports route called');
-    })
     app.get('/api/emails', checkLogin, async (req, res) => {
         const emails = await Email.find({ _user: req.user.id }).select({ recipients: false });
         res.status(200).send(emails);
-        console.log('/api/emails route called');
     })
+    app.get('/api/emails/drafts', checkLogin, async (req, res) => {
+        try {
+            const drafts = await Email.find({ _user: req.user.id, draft: true });
+            res.status(200).send(drafts);
+            console.log('/api/emails/drafts route called');
+        } catch (error) {
+            res.send({ error: 'No drafts found!' });
+        }
+    })
+    app.get('/api/email/:id', checkLogin, async (req, res) => {
+        const id = req.params.id;
+        try {
+            const email = await Email.findById({ _id: id });
+            res.status(200).send(email);
+
+        } catch (error) {
+            res.send({ error: 'Email not found!' });
+        }
+
+    });
 }

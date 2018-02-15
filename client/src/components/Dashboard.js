@@ -1,9 +1,9 @@
 import React from 'react';
 import EmailsList from './form/emailsList';
-const AllMails = () => {
+const Dashboard = () => {
   return (
     <EmailsList />
   );
 }
 
-export default AllMails;
+export default Dashboard;
