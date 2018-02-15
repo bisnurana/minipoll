@@ -6955,7 +6955,11 @@ div {
 .emailbox {
   min-height: 5rem;
   padding: 0.5rem;
-  border-radius: 3px; }
+  border-radius: 3px;
+  white-space: pre-wrap; }
+
+.clear-fix {
+  clear: both; }
 
 .email-status {
   padding: 0.5rem;
@@ -6964,3 +6968,7 @@ div {
 
 .email-status:last-of-type {
   margin-right: 0; }
+
+.email-date {
+  font-size: 0.9rem;
+  padding: 0.5rem; }

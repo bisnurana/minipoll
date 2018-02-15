@@ -16,17 +16,22 @@ class EmailsList extends Component {
             const email = this.props.emails.map(email => (
                 <div className="row" key={email._id}>
                     <div className="col s12 m10 l10 push-m1 push-l1">
-                        <div className="card grey lighten-2">
-                            <span className="right">Sent on{` `}{new Date(email.dateSent).toLocaleString()}</span>
+                        <div className="card white darken-2">
+                            <span className="right email-date">{new Date(email.dateSent).toLocaleString()}</span>
                             <div className="card-content">
-                                <span className="card-title"><b>{email.title}</b></span>
-                                <p >About: {email.subject}</p>
-                                Message:<br />
-                                <p className="white emailbox">{email.body}</p>
+                                <div className="left">
+                                    <i className="material-icons medium left grey-text">mail</i>
+                                </div>
+                                <div>
+                                    <span className="card-title"><b>{email.title}</b></span>
+                                    <p >Re: {email.subject}</p>
+                                    <div className="grey lighten-3 emailbox">{email.body}</div>
+                                </div>
+
                             </div>
                             <div className="card-action white-text grey darken-2">
-                                <span className="email-status">Total recipients: {email.recipientsCount}</span>{` `}
-                                <span className="email-status">Opens: {email.open / email.recipientsCount * 100}%</span>{` `}
+                                <span className="email-status">Total recipients: {email.recipientsCount}</span>
+                                <span className="email-status">Opens:{email.open / email.recipientsCount * 100}%</span>
                                 <span className="email-status">Clicks:{email.click / email.recipientsCount * 100}%</span>
                                 <Link to={'/mails/reports/' + email._id} className="right orange-text">View full report</Link>
                             </div>
