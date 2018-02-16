@@ -15,8 +15,8 @@ const MailReview = ({ onFormBack, formValues, sendEmail, history }) => {
             {reviewFields}
         </div>
         <div className="my-2">
-            <button className="btn" onClick={onFormBack} >Previous</button>
-            <button className="btn green right" onClick={() => sendEmail(formValues, () => history.push('/mails'))}>Send</button>
+            <button className="btn blue" onClick={onFormBack} >Previous</button>
+            <button className="btn green right" onClick={() => sendEmail(formValues, () => history.push('/dashboard'))}>Send</button>
         </div>
     </div >);
 }

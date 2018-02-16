@@ -46,7 +46,7 @@ module.exports = (app) => {
         try {
             await sgMail.sendMultiple(msg);
             await newEmail.save();
-            req.user.credits -= 1;
+            req.user.credits -= formattedRecipients.length;
             const user = await req.user.save();
             res.send(user);
         } catch (error) {
@@ -56,12 +56,7 @@ module.exports = (app) => {
 
     })
     app.post('/api/response/sgwebhooks', (req, res) => {
-        console.log(req.body[0]);
         const { event, email, emailID, url = null } = req.body[0];
-        console.log("url", url);
-        console.log('event', event);
-        console.log('email', email);
-        console.log('emailID', emailID);
         if (event === 'open') {
             Email.updateOne({
                 _id: emailID,
@@ -71,7 +66,7 @@ module.exports = (app) => {
             }
                 , {
                     $inc: { open: 1 },
-                    $set: { 'recipients.$.open': true, 'recipients.$.lastActive': Date.now() }
+                    $set: { 'recipients.$.open': true, 'recipients.$.dateActive': Date.now() }
 
                 }
             ).exec().then(result => console.log(result));
@@ -79,12 +74,12 @@ module.exports = (app) => {
             Email.updateOne({
                 _id: emailID,
                 recipients: {
-                    $elemMatch: { email: email, click: false }
+                    $elemMatch: { email: email }
                 }
             }
                 , {
                     $inc: { click: 1 },
-                    $set: { 'recipients.$.click': true, 'recipients.$.lastActive': Date.now() },
+                    $set: { 'recipients.$.click': true, 'recipients.$.dateActive': Date.now() },
                     $addToSet: { 'recipients.$.urls': url }
 
                 }

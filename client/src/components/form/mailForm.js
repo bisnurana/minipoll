@@ -25,7 +25,7 @@ class MailForm extends Component {
                 {this.renderFields()}
                 {this.renderTextarea()}
                 <div className="my-2">
-                    <button className="btn" onClick={this.props.history.goBack}>Cancel</button>
+                    <button className="btn blue" onClick={this.props.history.goBack}>Cancel</button>
                     <button className="btn orange" type="button" onClick={reset} disabled={pristine || submitting}>Clear</button>
                     <button className="btn green right" type="submit" disabled={pristine || submitting} >Next</button>
                 </div>

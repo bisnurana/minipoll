@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getEmails } from '../../actions';
 class EmailsList extends Component {
+    state = { isLoading: false };
     componentDidMount() {
         this.props.getEmails(() => this.setState({ isLoading: true }));
     }
-    state = { isLoading: false };
     renderContent() {
         if (this.state.isLoading === false) {
             return (<div><div className="progress">
                 <div className="indeterminate blue"></div>
             </div></div>);
-        } else if (this.state.isLoading === true && this.props.emails.length !== 0) {
-            const email = this.props.emails.map(email => (
+        }
+        if (this.state.isLoading === true && this.props.emails.length !== 0) {
+            const email = this.props.emails.reverse().map(email => (
                 <div className="row" key={email._id}>
                     <div className="col s12 m10 l10 push-m1 push-l1">
                         <div className="card grey lighten-3">
@@ -40,9 +41,9 @@ class EmailsList extends Component {
                 </div >
             ));
             return (<div>{email}</div>);
-        } else {
-            return (<div>No email found.</div>);
         }
+        return (<div>No email found.</div>);
+
     }
     render() {
         return (<div>{this.renderContent()}</div>);

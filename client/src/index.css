@@ -6973,3 +6973,26 @@ div {
 .email-date {
   font-size: 0.9rem;
   padding: 0.5rem; }
+
+/*bars*/
+.outer-bar {
+  width: 100%;
+  margin: 0.5rem auto;
+  height: 2rem; }
+
+.inner-bar {
+  height: 2rem; }
+
+.bar-text {
+  line-height: 2rem;
+  padding: 0 1rem; }
+
+.event-url {
+  font-size: 0.9rem; }
+
+.event-font {
+  font-size: 0.8rem; }
+
+.d-flex {
+  display: flex;
+  align-items: center; }

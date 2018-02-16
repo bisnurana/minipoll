@@ -5,7 +5,7 @@ export default (recipients, recipientsCount, credits) => {
         return `Some problem with email ${invalidrecipients}`;
     }
     if (recipientsCount > credits) {
-        return `Not enough credits for ${recipientsCount} recipients`;
+        return `Not enough credits for ${recipientsCount} recipient/s`;
     }
     return;
 }
