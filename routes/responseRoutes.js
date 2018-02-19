@@ -89,14 +89,13 @@ module.exports = (app) => {
         res.status(200).send({});
     })
     app.get('/api/emails', checkLogin, async (req, res) => {
-        const emails = await Email.find({ _user: req.user.id }).select({ recipients: false });
+        const emails = await Email.find({ _user: req.user.id, draft: false }).select({ recipients: false });
         res.status(200).send(emails);
     })
     app.get('/api/emails/drafts', checkLogin, async (req, res) => {
         try {
-            const drafts = await Email.find({ _user: req.user.id, draft: true });
+            const drafts = await Email.find({ _user: req.user.id, draft: true }).select({ recipients: false });;
             res.status(200).send(drafts);
-            console.log('/api/emails/drafts route called');
         } catch (error) {
             res.send({ error: 'No drafts found!' });
         }
@@ -111,5 +110,14 @@ module.exports = (app) => {
             res.send({ error: 'Email not found!' });
         }
 
+    });
+    app.post('/api/email/delete/', checkLogin, async (req, res) => {
+        const id = req.body.id;
+        try {
+            await Email.findByIdAndRemove(id);
+            res.status(200).send({ success: "email succesfully deleted" });
+        } catch (error) {
+            res.send({ error: 'email does not exist!' });
+        }
     });
 }

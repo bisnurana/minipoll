@@ -1,6 +1,5 @@
 import React from 'react';
 const RecipientsReport = ({ recipients }) => {
-    console.log(recipients);
     const eventReport = recipients.map((event, index) => {
         const urlItem = event.urls.map((url, i) => (<li key={i} className="collection-item event-url">• clicked{` `}{url}</li>));
         return (<ul key={index} className="collection with-header">

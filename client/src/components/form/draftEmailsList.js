@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getEmails } from '../../actions';
+import { getDraftEmails } from '../../actions';
 class EmailsList extends Component {
     state = { isLoading: false };
     componentDidMount() {
-        this.props.getEmails(() => this.setState({ isLoading: true }));
+        this.props.getDraftEmails(() => this.setState({ isLoading: true }));
     }
     renderContent() {
         if (this.state.isLoading === false) {
@@ -31,9 +31,7 @@ class EmailsList extends Component {
                             </div>
                             <div className="card-action white-text grey darken-2">
                                 <span className="email-status">Recipients: {email.recipientsCount}</span>
-                                <span className="email-status">Opens:{email.open / email.recipientsCount * 100}%</span>
-                                <span className="email-status">Clicks:{email.click / email.recipientsCount * 100}%</span>
-                                <Link to={'/mails/reports/' + email._id} className="right orange-text">View full report</Link>
+                                <Link to={'/mails/draft/' + email._id} className="right orange-text">Open</Link>
                             </div>
                         </div>
                     </div>
@@ -41,7 +39,7 @@ class EmailsList extends Component {
             ));
             return (<div>{email}</div>);
         }
-        return (<div>No email found.</div>);
+        return (<div>No draft found.</div>);
 
     }
     render() {
@@ -49,6 +47,6 @@ class EmailsList extends Component {
     }
 }
 function mapStateToProps(state) {
-    return { emails: state.emails };
+    return { emails: state.draftEmails };
 }
-export default connect(mapStateToProps, { getEmails })(EmailsList);
+export default connect(mapStateToProps, { getDraftEmails })(EmailsList);

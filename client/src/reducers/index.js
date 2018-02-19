@@ -3,10 +3,13 @@ import { reducer as reduxForm } from 'redux-form';
 import authReducer from './authReducer';
 import emailsReducer from './emailsReducer';
 import singleReportReducer from './singleReportReducer';
+import draftEmailsReducer from './draftEmailsReducer';
+
 
 export default combineReducers({
   auth: authReducer,
   form: reduxForm,
   emails: emailsReducer,
-  singleReport: singleReportReducer
+  singleReport: singleReportReducer,
+  draftEmails: draftEmailsReducer
 });

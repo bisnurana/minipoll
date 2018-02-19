@@ -1,5 +1,6 @@
 import React from 'react';
+import DraftEmailsList from './form/draftEmailsList';
 const MailDraft = () => {
-    return (<div>Mail Draft component</div>)
+    return (<div><DraftEmailsList /></div>)
 }
 export default MailDraft;

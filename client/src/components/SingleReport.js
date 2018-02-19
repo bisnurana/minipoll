@@ -10,6 +10,9 @@ class SingleMail extends Component {
             this.setState({ isLoading: true });
         });
     }
+    handleDelete(id) {
+        this.props.deleteEmail(id, () => this.props.history.push('/dashboard'));
+    }
     renderContent() {
         if (this.state.isLoading === false) {
             return (<div><div className="progress">
@@ -17,7 +20,7 @@ class SingleMail extends Component {
             </div></div>);
         }
         if (this.state.isLoading === true && this.props.report !== {}) {
-            const { recipientsCount, open, click, dateSent, body, recipients, title, subject } = this.props.report;
+            const { recipientsCount, open, click, dateSent, body, recipients, title, subject, _id } = this.props.report;
             let openRate = open / recipientsCount * 100;
             let clickRate = click / recipientsCount * 100;
             return (
@@ -25,6 +28,7 @@ class SingleMail extends Component {
                     <div className="row">
                         <div className="col s12 m10 l10 push-m1 push-l1">
                             <div className="card grey lighten-3">
+                                <a className=" right red-text cursor" onClick={() => { if (window.confirm('Are you sure you wish to delete this email?')) this.handleDelete(_id) }}>delete</a><br />
                                 <span className="right email-date">{new Date(dateSent).toLocaleString()}</span>
                                 <div className="card-content">
                                     <div>
@@ -49,11 +53,11 @@ class SingleMail extends Component {
                                 </div>
 
                                 <div>
-                                    <div className="card-content"><h5>Events</h5><RecipientsReport recipients={recipients} /></div>
+                                    <div className="card-content"><h5>Events</h5><RecipientsReport dateSent={dateSent} recipients={recipients} /></div>
                                 </div>
 
                             </div>
-                            <button className="btn right orange" onClick={this.props.history.goBack}>back</button>
+                            <a className="right cursor" onClick={this.props.history.goBack}>go back</a>
                         </div>
                     </div >
                 </div>);

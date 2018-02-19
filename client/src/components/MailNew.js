@@ -6,19 +6,18 @@ import MailReview from './form/mailReview';
 
 class MailNew extends Component {
   state = { reviewMail: false }
-  renderForm() {
-    if (this.state.reviewMail) {
-      return <MailReview history={this.props.history} onFormBack={() => this.setState({ reviewMail: false })} />;
-    }
-    return <MailForm history={this.props.history} onFormSubmit={() => this.setState({ reviewMail: true })} />;
-  }
   render() {
+    const review = this.state.reviewMail;
     return (
       <div>
-        {this.renderForm()}
+        {review ?
+          <MailReview history={this.props.history} onFormBack={() => this.setState({ reviewMail: false })} />
+          :
+          <MailForm history={this.props.history} onFormSubmit={() => this.setState({ reviewMail: true })} />
+        }
       </div>
     );
   }
 }
 
-export default reduxForm({ form: 'mailForm', destroyOnUnmount: true })(MailNew);
+export default reduxForm({ form: 'mailNew', destroyOnUnmount: true })(MailNew);

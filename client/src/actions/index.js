@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, LOGOUT_USER, GET_EMAILS, GET_SINGLEREPORT } from './types';
+import { FETCH_USER, LOGOUT_USER, GET_EMAILS, GET_SINGLEREPORT, GET_DRAFTEMAILS, DELETE_EMAIL } from './types';
 
 export const fetchUser = () => async (dispatch) => {
   const res = await axios.get('/api/current_user');
@@ -24,6 +24,16 @@ export const sendEmail = (values, callback) => async (dispatch) => {
 export const getEmails = (callback) => async (dispatch) => {
   const res = await axios.get('/api/emails');
   dispatch({ type: GET_EMAILS, payload: res.data });
+  callback();
+};
+export const deleteEmail = (id, callback) => async (dispatch) => {
+  await axios.post('/api/email/delete/', { id });
+  dispatch({ type: DELETE_EMAIL, payload: id });
+  callback();
+}
+export const getDraftEmails = (callback) => async (dispatch) => {
+  const res = await axios.get('/api/emails/drafts');
+  dispatch({ type: GET_DRAFTEMAILS, payload: res.data });
   callback();
 };
 export const getSingleReport = (id, callback) => async (dispatch) => {

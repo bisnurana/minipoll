@@ -15,7 +15,7 @@ class App extends Component {
         <NavBar />
         <Main />
       </div>
-            </BrowserRouter>);
+    </BrowserRouter>);
   }
 }
 
