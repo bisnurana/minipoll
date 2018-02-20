@@ -25,68 +25,80 @@ function formatLink(inputText) {
 }
 module.exports = (app) => {
     app.post('/api/response', checkLogin, checkCredit, async (req, res) => {
-        const { title, subject, body, recipients } = req.body;
+        const { id, title, subject, body, recipients, draft } = req.body;
         const formattedRecipients = recipients.split(',').map(recipient => recipient.trim().toLowerCase());
         const formattedBody = formatLink(body);
-        const newEmail = new Email({
-            title, subject, body, recipients: recipients.split(',').map(email => ({ email: email.trim().toLowerCase() })),
-            recipientsCount: formattedRecipients.length,
-            dateSent: Date.now(),
-            _user: req.user.id
-        });
-        const msg = {
-            to: formattedRecipients,
-            from: 'noreply@tailmail.com',
-            subject: subject,
-            html: `<p>${formattedBody}</p>`,
-            customArgs: {
-                emailID: newEmail.id,
-            },
-        };
-        try {
-            await sgMail.sendMultiple(msg);
-            await newEmail.save();
-            req.user.credits -= formattedRecipients.length;
-            const user = await req.user.save();
-            res.send(user);
-        } catch (error) {
-            res.status(422).send(err);
-        }
+        const formattedRecipientsEmail = recipients.split(',').map(email => ({ email: email.trim().toLowerCase() }));
+        // check draft status
+        if (draft === false) {
+            const newEmail = new Email({
+                title, subject, body, recipients: formattedRecipientsEmail,
+                recipientsCount: formattedRecipients.length,
+                dateSent: Date.now(),
+                _user: req.user.id,
+                draft: false
+            });
+            const msg = {
+                to: formattedRecipients,
+                from: 'noreply@tailmail.com',
+                subject: subject,
+                html: `<p>${formattedBody}</p>`,
+                customArgs: {
+                    emailID: newEmail.id,
+                },
+            };
+            const existingEmail = await Email.findOne({ _id: id });
+            if (existingEmail) {
+                try {
+                    await sgMail.sendMultiple(msg);
+                    await Email.updateOne({ _id: id }, {
+                        $set: { draft: false }
+                    }).exec();
+                    req.user.credits -= formattedRecipients.length;
+                    const user = await req.user.save();
+                    res.status(200).send({ msg: 'email sent!' });
+                } catch (error) {
+                    res.status(422).send(error);
+                }
 
-
-    })
-    app.post('/api/response/sgwebhooks', (req, res) => {
-        const { event, email, emailID, url = null } = req.body[0];
-        if (event === 'open') {
-            Email.updateOne({
-                _id: emailID,
-                recipients: {
-                    $elemMatch: { email: email, open: false }
+            } else {
+                try {
+                    await sgMail.sendMultiple(msg);
+                    await newEmail.save();
+                    req.user.credits -= formattedRecipients.length;
+                    const user = await req.user.save();
+                    res.status(200).send({ msg: 'email sent!' });
+                } catch (error) {
+                    res.status(422).send(error);
                 }
             }
-                , {
-                    $inc: { open: 1 },
-                    $set: { 'recipients.$.open': true, 'recipients.$.dateActive': Date.now() }
 
+
+        } else if (draft === true) {
+            const emailExist = await Email.findOne({ _id: id });
+            if (emailExist) {
+                Email.updateOne({
+                    _id: id
                 }
-            ).exec().then(result => console.log(result));
-        } else {
-            Email.updateOne({
-                _id: emailID,
-                recipients: {
-                    $elemMatch: { email: email }
-                }
+                    , {
+                        $set: { title: title, subject: subject, body: body, recipients: formattedRecipientsEmail }
+
+                    }
+                ).exec();
+                res.status(200).send({ msg: 'Draft email updated!' });
+            } else {
+                const newDraft = new Email({
+                    title, subject, body, recipients: formattedRecipientsEmail,
+                    recipientsCount: formattedRecipients.length,
+                    dateSent: Date.now(),
+                    _user: req.user.id,
+                    draft: true
+                });
+                await newDraft.save();
+                res.status(200).send({ msg: 'Draft email created!' });
             }
-                , {
-                    $inc: { click: 1 },
-                    $set: { 'recipients.$.click': true, 'recipients.$.dateActive': Date.now() },
-                    $addToSet: { 'recipients.$.urls': url }
-
-                }
-            ).exec().then(result => console.log(result));
-
         }
-        res.status(200).send({});
+
     })
     app.get('/api/emails', checkLogin, async (req, res) => {
         const emails = await Email.find({ _user: req.user.id, draft: false }).select({ recipients: false });

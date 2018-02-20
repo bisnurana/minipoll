@@ -11,9 +11,9 @@ class UpdateDraft extends Component {
         return (
             <div>
                 {review ?
-                    <UpdateReview history={this.props.history} onFormBack={() => this.setState({ reviewMail: false })} />
+                    <UpdateReview history={this.props.history} draftId={this.props.match.params.id} onFormBack={() => this.setState({ reviewMail: false })} />
                     :
-                    <UpdateForm history={this.props.history} params={this.props.match.params.id} onFormSubmit={() => this.setState({ reviewMail: true })} />
+                    <UpdateForm history={this.props.history} draftId={this.props.match.params.id} onFormSubmit={() => this.setState({ reviewMail: true })} />
                 }
             </div>
         );

@@ -6,7 +6,7 @@ const fields = [{ label: 'Email Title', name: 'title' },
 { label: 'Email Subject', name: 'subject' },
 { label: 'Email Body', name: 'body' }
 ];
-const MailUpdate = ({ onFormBack, formValues, sendEmail, history }) => {
+const MailUpdate = ({ onFormBack, formValues, sendEmail, history, saveDraft, draftId }) => {
     const reviewFields = fields.map((field, index) => (<div key={index} className="my-1"><label className="form-label">{field.label}:</label><br />
         <span>{formValues[field.name]}</span><br /></div>));
     return (<div className="py-2">
@@ -16,7 +16,8 @@ const MailUpdate = ({ onFormBack, formValues, sendEmail, history }) => {
         </div>
         <div className="my-2">
             <button className="btn blue" onClick={onFormBack} >Previous</button>
-            <button className="btn green right" onClick={() => sendEmail(formValues, () => history.push('/dashboard'))}>Send</button>
+            <button className="btn orange" onClick={() => saveDraft(formValues, draftId, () => history.push('/mails/drafts'))} type="button">Save and exit</button>
+            <button className="btn green right" onClick={() => sendEmail(formValues, draftId, () => history.push('/dashboard'))}>Send</button>
         </div>
     </div >);
 }

@@ -9,9 +9,6 @@ class UpdateForm extends Component {
     componentDidMount() {
         this.props.getDraftEmail(this.props.draftId);
     }
-    handleSaveDraft(values) {
-        console.log(values)
-    }
     renderFields() {
         return (<div>
             <Field type="text" name="title" label="Email Title:" component={formInput} />
@@ -33,8 +30,7 @@ class UpdateForm extends Component {
                 {this.renderTextarea()}
                 <div className="my-2">
                     <button className="btn grey" onClick={this.props.history.goBack}>Cancel</button>
-                    <button className="btn orange" onClick={() => this.handleSaveDraft} type="button" disabled={pristine || submitting}>Save and exit</button>
-                    <button className="btn green right" type="submit" disabled={pristine || submitting} >Next</button>
+                    <button className="btn green right" disabled={pristine || submitting} >Next</button>
                 </div>
             </form>
         </div>);
