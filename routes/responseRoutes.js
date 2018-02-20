@@ -24,6 +24,7 @@ function formatLink(inputText) {
     return replacedText;
 }
 module.exports = (app) => {
+    //handling form requests
     app.post('/api/response', checkLogin, checkCredit, async (req, res) => {
         const { id, title, subject, body, recipients, draft } = req.body;
         const formattedRecipients = recipients.split(',').map(recipient => recipient.trim().toLowerCase());
@@ -32,6 +33,7 @@ module.exports = (app) => {
         // check draft status
         if (draft === false) {
             const newEmail = new Email({
+                _id: id,
                 title, subject, body, recipients: formattedRecipientsEmail,
                 recipientsCount: formattedRecipients.length,
                 dateSent: Date.now(),
@@ -100,10 +102,47 @@ module.exports = (app) => {
         }
 
     })
+
+    app.post('/api/response/sgwebhooks', (req, res) => {
+        const { event, email, emailID, url = null } = req.body[0];
+        console.log(req.body[0]);
+        if (event === 'open') {
+            Email.updateOne({
+                _id: emailID,
+                recipients: {
+                    $elemMatch: { email: email, open: false }
+                }
+            }
+                , {
+                    $inc: { open: 1 },
+                    $set: { 'recipients.$.open': true, 'recipients.$.dateActive': Date.now() }
+
+                }
+            ).exec().then(result => console.log(result));
+        } else {
+            Email.updateOne({
+                _id: emailID,
+                recipients: {
+                    $elemMatch: { email: email }
+                }
+            }
+                , {
+                    $inc: { click: 1 },
+                    $set: { 'recipients.$.click': true, 'recipients.$.dateActive': Date.now() },
+                    $addToSet: { 'recipients.$.urls': url }
+
+                }
+            ).exec().then(result => console.log(result));
+
+        }
+        res.status(200).send({});
+    })
+
     app.get('/api/emails', checkLogin, async (req, res) => {
         const emails = await Email.find({ _user: req.user.id, draft: false }).select({ recipients: false });
         res.status(200).send(emails);
     })
+
     app.get('/api/emails/drafts', checkLogin, async (req, res) => {
         try {
             const drafts = await Email.find({ _user: req.user.id, draft: true }).select({ recipients: false });;
@@ -112,6 +151,7 @@ module.exports = (app) => {
             res.send({ error: 'No drafts found!' });
         }
     })
+
     app.get('/api/emails/drafts/:id', checkLogin, async (req, res) => {
         try {
             const draftEmail = await Email.find({ _user: req.user.id, draft: true });
@@ -120,6 +160,7 @@ module.exports = (app) => {
             res.send({ error: 'No draft email found!' });
         }
     })
+
     app.get('/api/email/:id', checkLogin, async (req, res) => {
         const id = req.params.id;
         try {
@@ -130,7 +171,8 @@ module.exports = (app) => {
             res.send({ error: 'Email not found!' });
         }
 
-    });
+    })
+
     app.post('/api/email/delete/', checkLogin, async (req, res) => {
         const id = req.body.id;
         try {
@@ -139,5 +181,5 @@ module.exports = (app) => {
         } catch (error) {
             res.send({ error: 'email does not exist!' });
         }
-    });
+    })
 }
