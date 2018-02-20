@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import emailsReducer from './emailsReducer';
 import singleReportReducer from './singleReportReducer';
 import draftEmailsReducer from './draftEmailsReducer';
+import draftEmailReducer from './draftEmailReducer';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   form: reduxForm,
   emails: emailsReducer,
   singleReport: singleReportReducer,
-  draftEmails: draftEmailsReducer
+  draftEmails: draftEmailsReducer,
+  singleDraft: draftEmailReducer
 });

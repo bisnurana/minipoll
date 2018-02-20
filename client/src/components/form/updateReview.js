@@ -6,11 +6,11 @@ const fields = [{ label: 'Email Title', name: 'title' },
 { label: 'Email Subject', name: 'subject' },
 { label: 'Email Body', name: 'body' }
 ];
-const MailReview = ({ onFormBack, formValues, sendEmail, history }) => {
+const MailUpdate = ({ onFormBack, formValues, sendEmail, history }) => {
     const reviewFields = fields.map((field, index) => (<div key={index} className="my-1"><label className="form-label">{field.label}:</label><br />
         <span>{formValues[field.name]}</span><br /></div>));
     return (<div className="py-2">
-        <h2 className="green-text center">Create . review & send</h2><br /> <br />
+        <h2 className="green-text center">Update . Review & send</h2><br /> <br />
         <div className="text-prewrap">
             {reviewFields}
         </div>
@@ -22,7 +22,7 @@ const MailReview = ({ onFormBack, formValues, sendEmail, history }) => {
 }
 function mapStateToProps(state) {
     return {
-        formValues: state.form.mailCreate.values
+        formValues: state.form.updateForm.values
     };
 };
-export default connect(mapStateToProps, actions)(MailReview);
+export default connect(mapStateToProps, actions)(MailUpdate);

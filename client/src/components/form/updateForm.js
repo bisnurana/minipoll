@@ -4,7 +4,14 @@ import { connect } from 'react-redux';
 import formInput from './formInput';
 import formTextarea from './formTextarea';
 import validateRecipients from '../../helpers/validateRecipients';
-class MailForm extends Component {
+import * as actions from '../../actions';
+class UpdateForm extends Component {
+    componentDidMount() {
+        this.props.getDraftEmail(this.props.draftId);
+    }
+    handleSaveDraft(values) {
+        console.log(values)
+    }
     renderFields() {
         return (<div>
             <Field type="text" name="title" label="Email Title:" component={formInput} />
@@ -18,15 +25,15 @@ class MailForm extends Component {
         </div>)
     }
     render() {
-        const { reset, pristine, submitting, handleSubmit } = this.props;
+        const { pristine, submitting, handleSubmit } = this.props;
         return (<div className="py-2">
-            <h2 className="grey-text center"><span className="green-text">Create</span> . review & send</h2><br />
+            <h2 className="grey-text center"><span className="green-text">Update</span> . Review & send</h2><br />
             <form onSubmit={handleSubmit(this.props.onFormSubmit)}>
                 {this.renderFields()}
                 {this.renderTextarea()}
                 <div className="my-2">
-                    <button className="btn blue" onClick={this.props.history.goBack}>Cancel</button>
-                    <button className="btn orange" type="button" onClick={reset} disabled={pristine || submitting}>Clear</button>
+                    <button className="btn grey" onClick={this.props.history.goBack}>Cancel</button>
+                    <button className="btn orange" onClick={() => this.handleSaveDraft} type="button" disabled={pristine || submitting}>Save and exit</button>
                     <button className="btn green right" type="submit" disabled={pristine || submitting} >Next</button>
                 </div>
             </form>
@@ -53,9 +60,13 @@ const validate = (values, props) => {
 
     return errors;
 }
-function mapStateToProps({ auth }) {
-    return { auth }
+function mapStateToProps(state) {
+
+    return {
+        auth: state.auth,
+        initialValues: state.singleDraft
+    }
 }
-MailForm = reduxForm({ form: 'mailCreate', validate, destroyOnUnmount: false })(MailForm);
-MailForm = connect(mapStateToProps)(MailForm);
-export default MailForm;
+UpdateForm = reduxForm({ form: 'updateForm', validate, destroyOnUnmount: false, enableReinitialize: true })(UpdateForm);
+UpdateForm = connect(mapStateToProps, actions)(UpdateForm);
+export default UpdateForm;

@@ -1,5 +1,23 @@
-import React from 'react';
-const UpdateDraft = () => {
-    return (<div>Update Draft</div>)
+import React, { Component } from 'react';
+import { reduxForm } from 'redux-form';
+import UpdateForm from './form/updateForm';
+import UpdateReview from './form/updateReview';
+
+
+class UpdateDraft extends Component {
+    state = { reviewMail: false }
+    render() {
+        const review = this.state.reviewMail;
+        return (
+            <div>
+                {review ?
+                    <UpdateReview history={this.props.history} onFormBack={() => this.setState({ reviewMail: false })} />
+                    :
+                    <UpdateForm history={this.props.history} params={this.props.match.params.id} onFormSubmit={() => this.setState({ reviewMail: true })} />
+                }
+            </div>
+        );
+    }
 }
-export default UpdateDraft;
+
+export default reduxForm({ form: 'mailForm', destroyOnUnmount: true })(UpdateDraft);

@@ -100,6 +100,14 @@ module.exports = (app) => {
             res.send({ error: 'No drafts found!' });
         }
     })
+    app.get('/api/emails/drafts/:id', checkLogin, async (req, res) => {
+        try {
+            const draftEmail = await Email.find({ _user: req.user.id, draft: true });
+            res.status(200).send(draftEmail);
+        } catch (error) {
+            res.send({ error: 'No draft email found!' });
+        }
+    })
     app.get('/api/email/:id', checkLogin, async (req, res) => {
         const id = req.params.id;
         try {
