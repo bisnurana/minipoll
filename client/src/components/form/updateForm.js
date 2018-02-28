@@ -38,7 +38,7 @@ class UpdateForm extends Component {
 }
 const validate = (values, props) => {
     const errors = {};
-    let credits = props.auth.credits || 0;
+    let credits = props.auth.credits;
     let recipientsCount = values.recipients ? values.recipients.split(',').length : 0;
     errors.recipients = validateRecipients(values.recipients || '', recipientsCount, credits);
     if (!values.title) {

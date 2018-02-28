@@ -5,6 +5,7 @@ module.exports = (app) => {
   app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => res.redirect('/dashboard'));
   app.get('/api/log_out', (req, res) => {
     req.logout();
+    req.session = null;
     res.redirect('/');
   });
   app.get('/api/current_user', (req, res) => {

@@ -15,8 +15,8 @@ const MailUpdate = ({ onFormBack, formValues, sendEmail, history, saveDraft, dra
             {reviewFields}
         </div>
         <div className="my-2">
-            <button className="btn blue" onClick={onFormBack} >Previous</button>
-            <button className="btn orange" onClick={() => saveDraft(formValues, draftId, () => history.push('/mails/drafts'))} type="button">Save and exit</button>
+            <button className="btn grey mr-1" onClick={onFormBack} >Previous</button>
+            <button className="btn blue" onClick={() => saveDraft(formValues, draftId, () => history.push('/mails/drafts'))} type="button">Save and exit</button>
             <button className="btn green right" onClick={() => sendEmail(formValues, draftId, () => history.push('/dashboard'))}>Send</button>
         </div>
     </div >);

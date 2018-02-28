@@ -6949,6 +6949,9 @@ div {
 .my-2 {
   margin: 2rem auto; }
 
+.mr-1 {
+  margin-right: 5px; }
+
 /* 404 */
 .wrapper-404 {
   height: 80vh;

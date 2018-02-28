@@ -25,8 +25,8 @@ class MailForm extends Component {
                 {this.renderFields()}
                 {this.renderTextarea()}
                 <div className="my-2">
-                    <button className="btn blue" onClick={this.props.history.goBack}>Cancel</button>
-                    <button className="btn orange" type="button" onClick={reset} disabled={pristine || submitting}>Clear</button>
+                    <button className="btn blue mr-1" onClick={this.props.history.goBack}>Cancel</button>
+                    <button className="btn grey" type="button" onClick={reset} disabled={pristine || submitting}>Clear</button>
                     <button className="btn green right" disabled={pristine || submitting} >Next</button>
                 </div>
             </form>
@@ -35,7 +35,7 @@ class MailForm extends Component {
 }
 const validate = (values, props) => {
     const errors = {};
-    let credits = props.auth.credits || 0;
+    let credits = props.auth.credits;
     let recipientsCount = values.recipients ? values.recipients.split(',').length : 0;
     errors.recipients = validateRecipients(values.recipients || '', recipientsCount, credits);
     if (!values.title) {
