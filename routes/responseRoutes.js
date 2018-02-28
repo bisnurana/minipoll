@@ -58,7 +58,7 @@ module.exports = (app) => {
                     }).exec();
                     req.user.credits -= formattedRecipients.length;
                     const user = await req.user.save();
-                    res.status(200).send({ msg: 'email sent!' });
+                    res.status(200).send(user);
                 } catch (error) {
                     res.status(422).send(error);
                 }
@@ -97,7 +97,7 @@ module.exports = (app) => {
                     draft: true
                 });
                 await newDraft.save();
-                res.status(200).send({ msg: 'Draft email created!' });
+                res.status(200).send(user);
             }
         }
 
