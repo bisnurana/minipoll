@@ -20,4 +20,4 @@ class UpdateDraft extends Component {
     }
 }
 
-export default reduxForm({ form: 'mailForm', destroyOnUnmount: true })(UpdateDraft);
+export default reduxForm({ form: 'mailFormUpdate', destroyOnUnmount: true })(UpdateDraft);

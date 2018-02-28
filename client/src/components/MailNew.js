@@ -20,4 +20,4 @@ class MailNew extends Component {
   }
 }
 
-export default reduxForm({ form: 'mailForm', destroyOnUnmount: true })(MailNew);
+export default reduxForm({ form: 'mailFormNew', destroyOnUnmount: true })(MailNew);

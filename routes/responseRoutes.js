@@ -58,7 +58,7 @@ module.exports = (app) => {
                     }).exec();
                     req.user.credits -= formattedRecipients.length;
                     const user = await req.user.save();
-                    res.status(200).send(user);
+                    res.status(200).send({ msg: 'email sent!' });
                 } catch (error) {
                     res.status(422).send(error);
                 }
@@ -97,7 +97,7 @@ module.exports = (app) => {
                     draft: true
                 });
                 await newDraft.save();
-                res.status(200).send(user);
+                res.status(200).send({ msg: 'Draft email created!' });
             }
         }
 
@@ -153,8 +153,9 @@ module.exports = (app) => {
     })
 
     app.get('/api/emails/drafts/:id', checkLogin, async (req, res) => {
+        let id = req.params.id;
         try {
-            const draftEmail = await Email.find({ _user: req.user.id, draft: true });
+            const draftEmail = await Email.find({ _user: req.user.id, draft: true, _id: id });
             res.status(200).send(draftEmail);
         } catch (error) {
             res.send({ error: 'No draft email found!' });
