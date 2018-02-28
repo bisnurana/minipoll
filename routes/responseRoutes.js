@@ -60,7 +60,7 @@ module.exports = (app) => {
                     const user = await req.user.save();
                     res.status(200).send({ msg: 'email sent!' });
                 } catch (error) {
-                    res.status(422).send(error);
+                    res.status(422).send({ msg: 'Draft Email sending failed' });
                 }
 
             } else {
@@ -71,7 +71,7 @@ module.exports = (app) => {
                     const user = await req.user.save();
                     res.status(200).send({ msg: 'email sent!' });
                 } catch (error) {
-                    res.status(422).send(error);
+                    res.status(422).send({ msg: 'New Email sending failed' });
                 }
             }
 
