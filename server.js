@@ -35,8 +35,8 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-app.use(function (req, res, next) {
+/* app.use(function (req, res, next) {
   res.status(404).send({ Error: "Oop! page not found" });
-});
+}); */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
