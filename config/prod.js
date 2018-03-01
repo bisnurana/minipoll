@@ -5,6 +5,6 @@ module.exports = {
   COOKIE_KEYS: process.env.COOKIE_KEYS,
   STRIPE_PK: process.env.STRIPE_PK,
   STRIPE_SK: process.env.STRIPE_SK,
-  SENGRIDAPI_KEY: process.env.SENGRIDAPI_KEY
+  SENDGRIDAPI_KEY: process.env.SENDGRIDAPI_KEY
 };
 
