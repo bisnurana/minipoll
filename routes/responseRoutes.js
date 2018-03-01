@@ -58,7 +58,7 @@ module.exports = (app) => {
                     }).exec();
                     req.user.credits -= formattedRecipients.length;
                     const user = await req.user.save();
-                    res.status(200).send({ msg: 'email sent!' });
+                    res.status(200).send(user);
                 } catch (error) {
                     res.status(422).send({ msg: 'Draft Email sending failed' });
                 }
@@ -69,7 +69,7 @@ module.exports = (app) => {
                     await newEmail.save();
                     req.user.credits -= formattedRecipients.length;
                     const user = await req.user.save();
-                    res.status(200).send({ msg: 'email sent!' });
+                    res.status(200).send(user);
                 } catch (error) {
                     res.status(422).send({ msg: 'New Email sending failed' });
                 }
