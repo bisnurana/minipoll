@@ -39,7 +39,7 @@ class EmailsList extends Component {
             ));
             return (<div>{email}</div>);
         }
-        return (<div>No draft found.</div>);
+        return (<div><div className="wrapper-50vh"><p className="orange-text lighten-3 center-align">You have no drafts at the moment.</p></div></div>);
 
     }
     render() {

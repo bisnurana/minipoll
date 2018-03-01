@@ -28,7 +28,7 @@ class SingleMail extends Component {
                     <div className="row">
                         <div className="col s12 m10 l10 push-m1 push-l1">
                             <div className="card grey lighten-3">
-                                <a className=" right red-text cursor mr-1" onClick={() => { if (window.confirm('Are you sure you wish to delete this email?')) this.handleDelete(_id) }}>delete</a><br />
+                                <a className=" right red-text cursor mr-1" onClick={() => { if (window.confirm(`Delete ${title} ?`)) this.handleDelete(_id) }}>delete</a><br />
                                 <span className="right email-date">{new Date(dateSent).toLocaleString()}</span>
                                 <div className="card-content">
                                     <div>
@@ -48,8 +48,8 @@ class SingleMail extends Component {
                                         </div>
                                     </div>
                                     <span className="email-status">Total recipients: {recipientsCount}</span>
-                                    <span className="email-status">Opens:{openRate}%</span>
-                                    <span className="email-status">Clicks:{clickRate}%</span>
+                                    <span className="email-status">Opens:{Math.round(openRate)}%</span>
+                                    <span className="email-status">Clicks:{Math.round(clickRate)}%</span>
                                 </div>
 
                                 <div>

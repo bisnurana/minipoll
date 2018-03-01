@@ -22,7 +22,7 @@ class UpdateForm extends Component {
         </div>)
     }
     render() {
-        const { pristine, submitting, handleSubmit } = this.props;
+        const { handleSubmit } = this.props;
         return (<div className="py-2">
             <h2 className="grey-text center"><span className="green-text">Update</span> . Review & send</h2><br />
             <form onSubmit={handleSubmit(this.props.onFormSubmit)}>
@@ -30,7 +30,7 @@ class UpdateForm extends Component {
                 {this.renderTextarea()}
                 <div className="my-2">
                     <button className="btn grey" onClick={this.props.history.goBack}>Cancel</button>
-                    <button className="btn green right" disabled={pristine || submitting} >Next</button>
+                    <button className="btn green right">Next</button>
                 </div>
             </form>
         </div>);

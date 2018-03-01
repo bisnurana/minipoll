@@ -5,8 +5,7 @@ export default function (state = [], action) {
         case GET_EMAILS:
             return action.payload;
         case DELETE_EMAIL:
-            const { id } = action.payload;
-            return state.filter(email => email._id !== id);
+            return state.filter(email => email._id !== action.payload);
         default:
             return state;
     }
