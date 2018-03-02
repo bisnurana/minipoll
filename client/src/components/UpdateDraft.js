@@ -9,7 +9,7 @@ class UpdateDraft extends Component {
     render() {
         const review = this.state.reviewMail;
         return (
-            <div>
+            <div className="row">
                 {review ?
                     <UpdateReview history={this.props.history} draftId={this.props.match.params.id} onFormBack={() => this.setState({ reviewMail: false })} />
                     :

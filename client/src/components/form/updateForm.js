@@ -23,7 +23,7 @@ class UpdateForm extends Component {
     }
     render() {
         const { handleSubmit } = this.props;
-        return (<div className="py-2">
+        return (<div className="py-2 col s12 m10 l10 push-m1 push-l1">
             <h2 className="grey-text center"><span className="green-text">Update</span> . Review & send</h2><br />
             <form onSubmit={handleSubmit(this.props.onFormSubmit)}>
                 {this.renderFields()}

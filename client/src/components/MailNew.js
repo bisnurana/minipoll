@@ -9,7 +9,7 @@ class MailNew extends Component {
   render() {
     const review = this.state.reviewMail;
     return (
-      <div>
+      <div className="row">
         {review ?
           <MailReview history={this.props.history} onFormBack={() => this.setState({ reviewMail: false })} />
           :

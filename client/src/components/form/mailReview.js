@@ -9,7 +9,7 @@ const fields = [{ label: 'Email Title', name: 'title' },
 const MailReview = ({ onFormBack, formValues, sendEmail, history, saveDraft, draftId }) => {
     const reviewFields = fields.map((field, index) => (<div key={index} className="my-1"><label className="form-label">{field.label}:</label><br />
         <span>{formValues[field.name]}</span><br /></div>));
-    return (<div className="py-2">
+    return (<div className="py-2 col s12 m10 l10 push-m1 push-l1">
         <h2 className="green-text center">Create . review & send</h2><br /> <br />
         <div className="text-prewrap">
             {reviewFields}

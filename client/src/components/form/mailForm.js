@@ -19,7 +19,7 @@ class MailForm extends Component {
     }
     render() {
         const { reset, pristine, submitting, handleSubmit } = this.props;
-        return (<div className="py-2">
+        return (<div className="py-2 col s12 m10 l10 push-m1 push-l1">
             <h2 className="grey-text center"><span className="green-text">Create</span> . review & send</h2><br />
             <form onSubmit={handleSubmit(this.props.onFormSubmit)}>
                 {this.renderFields()}
